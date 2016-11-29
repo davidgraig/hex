@@ -1,0 +1,48 @@
+[
+    {
+        "type": 0,
+        "entityId": 0,
+        "coord": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        }
+    },
+    {
+        "type": 1,
+        "entityId": 0,
+        "textureId": "tileMagic_full.png"
+    },
+    {
+        "type": 0,
+        "entityId": 1,
+        "coord": {
+            "x": 1,
+            "y": 0,
+            "z": 0
+        }
+    },
+    {
+        "type": 1,
+        "entityId": 1,
+        "textureId": "tileWater_full.png"
+    },
+    {
+        "type": 0,
+        "entityId": 2,
+        "coord": {
+            "x": 1,
+            "y": 1,
+            "z": 0
+        }
+    },
+    {
+        "type": 1,
+        "entityId": 2,
+        "textureId": "alienBlue.png"
+    },
+    {
+        "type": 2,
+        "entityId": 2
+    }
+]
