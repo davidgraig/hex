@@ -10,7 +10,7 @@ export class Components {
 
     get entityIdMap(): Map<number, Array<Component>> {
         return this._entityMap;
-    } 
+    }
 
     get typeMap(): Map<Type, Array<Component>> {
         return this._typeMap;
@@ -32,6 +32,15 @@ export class Components {
         return this._entityMap.get(id);
     }
 
+    byEntityAndType<T extends Component>(id: number, type: Type): T {
+        return this.byEntityId(id)
+            .filter(function (component) {
+                return component.type == type
+            }).map(function (component) {
+                return component as T
+            })[0];
+    }
+
     byType(type: Type): Array<Component> {
         return this._typeMap.get(type);
     }
@@ -48,7 +57,4 @@ export class Components {
         }
         this._typeMap.get(component.type).push(component);
     }
-
-
-
 }

@@ -1,3 +1,3 @@
 export enum Type {
-    Grid, Drawn, Player
+    Grid, Drawn, Player, Sprite
 }
