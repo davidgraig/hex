@@ -10,9 +10,10 @@ export class Server {
         return this._subject;
     }
 
-    constructor(address: string, port: number) {
+    constructor(address: string, port: number, callback = null) {
 
         this._socket = new WebSocket(`ws://${address}:${port}`);
+        this._socket.onopen = callback;
         this._socket.onclose = closeEvent => {
             // TODO handle any errors based on error code (described here: http://stackoverflow.com/questions/18803971/websocket-onerror-how-to-read-error-description)
             console.log(`Socket Close Event. Reason: ${closeEvent.reason}, code: ${closeEvent.code}`);
@@ -40,7 +41,7 @@ class ServerObserver implements Observer.NextObserver<Object> {
 
     next(value: Object) {
         if (this._socket.readyState == WebSocket.OPEN) {
-            this._socket.send(value);
+            this._socket.send(JSON.stringify(value));
         }
     }
 }

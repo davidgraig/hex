@@ -29,19 +29,18 @@ export class World extends Phaser.State implements PhaserSpriteFactory {
         this.world.setBounds(0, 0, 500, 500);
         this.physics.startSystem(Phaser.Physics.P2JS);
 
-        this._server = new Server("localhost", 8220);
-
-        this._server.subject.next({requestType: 'Ping'});
+        this._server = new Server("localhost", 8220, event => {
+            this._server.subject.next({requestType: 'Ping'})
+        });
 
         this._server.subject.subscribe(
             response => {
-                debugger;
+                console.log(response);
             },
             error => {
-                console.log(`Error: ${error}`);
+                console.log(error);
             }
         )
-
 
         this._components = new Components();
         this._spriteSystem = new SpriteSystem(this);
