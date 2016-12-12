@@ -1,22 +1,5 @@
 [
     {
-        "entityId": 0,
-        "type": 0,
-        "coord": { "x": 1, "y": 1, "z": 0 }
-    },
-    {
-        "entityId": 0,
-        "type": 1,
-        "textureId": "alienBlue.png"
-    },
-    {
-        "type": 0,
-        "entityId": 2
-    },
-
-
-
-    {
         "entityId": 1,
         "type": 0,
         "coord": { "x": 0, "y": 0, "z": 0 }
@@ -27,16 +10,18 @@
         "textureId": "tileMagic_full.png"
     },
 
-
-    
     {
-        "entityId": 2,
+        "entityId": 0,
         "type": 0,
-        "coord": { "x": 1, "y": 0, "z": 0 }
+        "coord": { "x": 1, "y": 1, "z": 0 }
     },
     {
-        "entityId": 2,
+        "entityId": 0,
         "type": 1,
-        "textureId": "tileWater_full.png"
+        "textureId": "alienBlue.png"
+    },
+    {
+        "entityId": 0,
+        "type": 2
     }
 ]

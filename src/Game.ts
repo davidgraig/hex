@@ -1,5 +1,7 @@
 /// <reference path="../node_modules/phaser/typescript/phaser.d.ts"/>
 /// <reference path="../node_modules/typescript/lib/lib.es6.d.ts" />
+/// <reference path="../node_modules/rxjs/Rx.d.ts" />
+/// <reference path="../node_modules/rxjs/Observer.d.ts" />
 
 import { Boot } from "./Boot";
 import { Loading } from "./Loading";

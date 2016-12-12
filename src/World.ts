@@ -10,6 +10,7 @@ import { Player } from './components/Player'
 import { ComponentFactory } from './components/ComponentFactory'
 import { InputSystem } from './systems/InputSystem'
 import { Sprite } from './components/Sprite'
+import { Server } from './Server'
 
 export class World extends Phaser.State implements PhaserSpriteFactory {
 
@@ -21,12 +22,26 @@ export class World extends Phaser.State implements PhaserSpriteFactory {
     private _inputSystem: InputSystem;
     private _cursors: Phaser.CursorKeys;
     private _components: Components;
-
-    private _sprites: Sprite[];
+    private _server: Server;
 
     create() {
 
+        this.world.setBounds(0, 0, 500, 500);
         this.physics.startSystem(Phaser.Physics.P2JS);
+
+        this._server = new Server("localhost", 8220);
+
+        this._server.subject.next({requestType: 'Ping'});
+
+        this._server.subject.subscribe(
+            response => {
+                debugger;
+            },
+            error => {
+                console.log(`Error: ${error}`);
+            }
+        )
+
 
         this._components = new Components();
         this._spriteSystem = new SpriteSystem(this);
