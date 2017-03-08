@@ -1,3 +1,5 @@
+/// <reference path="spriter/Spriter.ts"/> //
+
 import { SpriteSystem } from './systems/SpriteSystem'
 import { Component } from './components/Component'
 import { Components } from './components/Components'
@@ -24,13 +26,16 @@ export class World extends Phaser.State implements PhaserSpriteFactory {
     private _components: Components;
     private _server: Server;
 
+    private _spriterGroup: Spriter.SpriterGroup;
+
     create() {
 
         this.world.setBounds(0, 0, 500, 500);
         this.physics.startSystem(Phaser.Physics.P2JS);
 
-        this._server = new Server("localhost", 8220, event => {
-            this._server.subject.next({requestType: 'Ping'})
+        this._server = new Server("localhost", 8220, onconnect => {
+            this._server.subject.next({requestType: 'SignIn', data: {email: 'test@test.com', password:'1234'}});
+            this._server.subject.next({requestType: 'GetTerrain', data: {point: {x: 0, y: 0, z: 0}}})
         });
 
         this._server.subject.subscribe(
@@ -47,18 +52,35 @@ export class World extends Phaser.State implements PhaserSpriteFactory {
         this._inputSystem = new InputSystem();
         this._cursors = this.game.input.keyboard.createCursorKeys();
 
-        let json = this.game.cache.getJSON("components");
         let factory = new ComponentFactory();
+        let json = this.game.cache.getJSON("components");
 
         json.forEach(function (componentJson, index, groups) {
             this._components.add(factory.fromJson(componentJson));
         }, this);
 
         this._spriteSystem.execute(this._components);
+
+
+        /* Spriter Tests */
+        let spriterLoader = new Spriter.Loader();
+        let spriterFile = new Spriter.SpriterJSON(this.cache.getJSON("TESTJson"), { 
+            imageNameType: Spriter.eImageNameType.NAME_ONLY 
+        });
+        let spriterData = spriterLoader.load(spriterFile);
+        this._spriterGroup = new Spriter.SpriterGroup(this.game, spriterData, "TEST", "Hero", 0, 100);
+        this._spriterGroup.position.setTo(200, 200);
+        this.world.add(this._spriterGroup);
+        
+        this._spriterGroup.onVariableSet.add((spriter: Spriter.SpriterGroup, variable: Spriter.Variable) => {
+            console.log(variable.string);
+        }, this);
+
     }
 
     update() {
         this._inputSystem.execute(this._components, this._cursors);
+        this._spriterGroup.updateAnimation();
     }
 
     addAndBuild(coord: AxialCoord, textureId: string, enablePhysics: boolean) {

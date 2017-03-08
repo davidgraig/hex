@@ -38,9 +38,12 @@ export class Loading extends Phaser.State {
             'assets/images/hexagons/base/Spritesheet/complete.png', 
             'assets/images/hexagons/base/Spritesheet/complete.xml'
         );
-        // this.game.load.tilemap("scratch", "assets/map/test.json", null, Phaser.Tilemap.TILED_JSON);
         
-        this.game.load.start(); // Required so the onFileComplete listener is called
+        this.load.atlas("TEST", "assets/spriter/Atlas.png", "assets/spriter/Atlas.json");
+        this.load.xml("TESTXml", "assets/spriter/TEST.xml");
+        this.load.json("TESTJson", "assets/spriter/TEST.json");
+        
+        this.game.load.start();
     }
 
     update() {
